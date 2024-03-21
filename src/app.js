@@ -2,8 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import userRouter from './routes/user.routes.js';
-import { createServer } from 'http';
-import { Server } from 'socket.io';
+
 
 console.log("inside the app.js file");
 // MIDDLEWARE
@@ -13,23 +12,13 @@ console.log("inside the app.js file");
 
 const app=express()
 
-const httpServer = createServer(app); // Create an HTTP server instance
-const io = new Server(httpServer); // Initialize Socket.IO with the HTTP server
+ // Initialize Socket.IO with the HTTP server
 
 // Middleware setup...
 // Your existing middleware setup goes here...
 
 // Socket.IO connection handling
-io.on('connection', (socket) => {
-    console.log('A user connected');
-    
-    // Handle Socket.IO events here...
 
-
-socket.on('disconnect',function(){
-    console.log("user disconnected ")
-})
-});
 app.use(cors({ 
     origin:process.env.CORS_ORIGIN,
     credentials:true

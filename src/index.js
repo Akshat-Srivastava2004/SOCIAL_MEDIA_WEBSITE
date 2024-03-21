@@ -3,7 +3,7 @@ import express from "express";
 import { User } from "./model/user.model.js";
 import { registerUser } from "./controller/user.controller.js";
 import connectDB from "./db/index.js";
-import { app ,httpServer, io } from "./app.js";
+import { app } from "./app.js";
 
 import cookieParser from "cookie-parser";
 dotenv.config({
@@ -13,7 +13,7 @@ dotenv.config({
 
 connectDB()
     .then(() => {
-        httpServer.listen(process.env.PORT || 5000, () => {
+        app.listen(process.env.PORT || 5000, () => {
             console.log(`Server is running at port: ${process.env.PORT || 5000}`);
            
         });
