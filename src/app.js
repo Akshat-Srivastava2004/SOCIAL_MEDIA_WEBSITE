@@ -37,4 +37,4 @@ app.use(cookieParser())
 
 app.use("/api/v1/users", userRouter);
 
-export { app ,httpServer, io};
+export { app };
