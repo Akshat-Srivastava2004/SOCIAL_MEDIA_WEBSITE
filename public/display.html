@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Posts</title>
+
+    <style>
+      .container {
+        text-align: center;
+        background-color: #ffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .image-container {
+        display: flex;
+        flex-direction: column; /* Display posts vertically */
+        align-items: center; /* Center the posts horizontally */
+        padding: 10px; /* Add some padding */
+        margin-top: 20px;
+      }
+
+      .post {
+        overflow: hidden;
+        width: 400px; /* Set a fixed width for each post */
+        /* height: 600px; */
+        margin-bottom: 40px; /* Add some space between posts */
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      .post img {
+        width: 100%; /* Make images fill the post container */
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+      }
+
+      .comment-section {
+        padding: 10px;
+        border-top: 1px solid #ccc;
+      }
+
+      .comment {
+        margin-bottom: 5px;
+      }
+
+      .add-comment-form {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .add-comment-form input[type="text"] {
+        width: 60%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-right: 10px;
+      }
+
+      .add-comment-form button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .add-comment-form button:hover {
+        background-color: #0056b3;
+      }
+
+      .author-name {
+        font-size: 14px;
+        color: #777;
+        margin-bottom: 10px;
+      }
+
+      #fetchImageBtn:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+      }
+
+      .topnav {
+        overflow: hidden;
+        background-color: #333;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .name {
+        color: #f2f2f2;
+        padding: 14px 16px;
+        font-size: 17px;
+      }
+
+      .buttons a {
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+      }
+
+      .buttons a:hover {
+        background-color: #ddd;
+        color: black;
+      }
+
+      .buttons a.active {
+        background-color: #04aa6d;
+        color: white;
+      }
+
+      .topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+      }
+
+      .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+      }
+
+      .topnav a.active {
+        background-color: #04aa6d;
+        color: white;
+      }
+
+      .search-container {
+        float: right;
+      }
+
+      .search-container input[type="text"] {
+        padding: 6px;
+        margin-top: 8px;
+        margin-right: 16px;
+        font-size: 17px;
+        border: none;
+      }
+
+      .search-container button {
+        padding: 6px 10px;
+        margin-top: 8px;
+        margin-right: 16px;
+        background: #ddd;
+        font-size: 17px;
+        border: none;
+        cursor: pointer;
+      }
+      .comment {
+        /* width:35%; */
+        margin: 0 auto;
+      }
+
+      a {
+        margin-right: 20px; /* Adjust the value to set the desired space between the links */
+      }
+
+      #fetchallImageBtn:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+      }
+
+      #namesList {
+        list-style-type: none; /* Remove bullet points */
+        padding: 0; /* Remove default padding */
+        margin: 0; /* Remove default margin */
+      }
+
+      /* Style for each list item */
+      #namesList li {
+        background-color: #f4f4f4; /* Light gray background */
+        padding: 10px; /* Padding around each name */
+        margin-bottom: 5px; /* Add some spacing between each name */
+        border-radius: 5px; /* Add rounded corners */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+      }
+      #namesList a {
+        text-decoration: none;
+      }
+      .small-button {
+        width: 80px; /* Adjust width as needed */
+        height: 30px; /* Adjust height as needed */
+        font-size: 12px; /* Adjust font size as needed */
+        /* Add any other styles as needed */
+      }
+      .parentMessage {
+        background-color: #f7efef;
+        border-radius: 10px 10px 10px 10px;
+        padding: 10px;
+        margin-bottom: 15px;
+      }
+      .commentReplyButton {
+        cursor: pointer;
+        padding: 3px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        margin-right: 10px;
+      }
+
+      .ReplyParentMessage {
+        background-color: #f7efef;
+        border-radius: 10px 10px 10px 10px;
+        padding: 10px;
+        margin-left: 10%;
+        margin-bottom: 15px;
+      }
+      .ReplyChildMessage {
+        background-color: #f7efef;
+        border-radius: 10px 10px 10px 10px;
+        padding: 10px;
+        margin-left: 20%;
+        margin-bottom: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topnav">
+      <div class="name">Akshats Social Media</div>
+      <div class="buttons">
+        <a class="active" id="fetchImageBtn">Fetch latest post</a>
+        <a class="active" id="fetchallImageBtn">Fetch all post</a>
+        <a href="http://localhost:5000/post.html">Create</a>
+        <div class="search-container">
+          <input type="text" placeholder="Find User" id="searchInput" />
+          <button type="button" id="fetchallnames">Search</button>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <h1 id="postsHeading">
+        <i>Posts will display here ... Click on fetch button</i>
+      </h1>
+      <div class="image-container" id="imageContainer"></div>
+    </div>
+    <ul id="namesList"></ul>
+
+    <script>
+      const fetchallnames = document.getElementById("fetchallnames"); // corrected variable name
+      const namesinput = document.getElementById("searchInput");
+      const namesList = document.getElementById("namesList");
+
+      fetchallnames.addEventListener("click", async function () {
+        const namesvalue = namesinput.value;
+        console.log("------the enter value of user ----", namesvalue);
+        try {
+          const response = await fetch(
+            `http://localhost:5000/api/v1/users/usernamedetail/${namesvalue}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Failed to fetch the data");
+          }
+
+          const data = await response.json();
+          const namesonlyy = data.namesonly;
+          const namesonly = namesonlyy.map((item) => item.user);
+          const namesid = namesonlyy.map((item) => item.id);
+          console.log("All ids is ", namesid);
+          console.log("All the names and ids :", namesonlyy);
+
+          namesList.innerHTML = "";
+          namesonlyy.forEach((name) => {
+            const listItem = document.createElement("li");
+            const anchor = document.createElement("a");
+            anchor.textContent = name.user;
+            console.log("-----user detai ---", anchor.textContent);
+            anchor.href = `http://localhost:5000/api/v1/users/detailuser/${name.id}`;
+            console.log("-----user detai is  ---", anchor.href);
+            listItem.appendChild(anchor);
+            console.log("------wddwd----", anchor.textContent);
+            namesList.appendChild(listItem);
+          });
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      });
+
+      const fetchallImageBtn = document.getElementById("fetchallImageBtn");
+      //   const fetchImageBtn = document.getElementById("fetchImageBtn");
+      const imageContainer = document.getElementById("imageContainer");
+      const postsHeading = document.getElementById("postsHeading");
+
+      async function deletePost(postId) {
+        try {
+          console.log("the post id to be deleted is ", postId);
+          console.log(`http://localhost:5000/api/v1/users/delete/${postId}`);
+          const response = await fetch(
+            `http://localhost:5000/api/v1/users/delete/${postId}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          if (response.ok) {
+            // If deletion successful, remove the post from the UI
+            //const postElement = document.querySelector(
+            //  `.post[data-id="${postId}"]`
+            //);
+            const divElement = document.getElementById(postId);
+            if (divElement) {
+              divElement.remove();
+            }
+          } else {
+            console.error("Failed to delete post:", await response.json());
+          }
+        } catch (error) {
+          console.error("Error deleting post:", error);
+        }
+      }
+
+      fetchallImageBtn.addEventListener("click", async function () {
+        try {
+          const response = await fetch(
+            "http://localhost:5000/api/v1/users/allpost"
+          );
+          if (!response.ok) {
+            throw new Error("failed to fetch the image ");
+          }
+          const data = await response.json();
+          const allpost = data.allpost;
+          console.log("----------all the details of post ", allpost);
+          const currentlogin = data.currentuser;
+          console.log("-----the current user login is ", currentlogin);
+          const allpostimage = data.allimage;
+          console.log("----------all the details of image ", allpostimage);
+          const allpostcaption = data.allcaption;
+          console.log("----------all the details of caption ", allpostcaption);
+          const postdetail = data.alldetailofimage;
+          console.log("----------all the details of post  are ", postdetail);
+          const allpostids = data.allpostids;
+
+          postsHeading.style.display = "none";
+          // Clear previous images
+          imageContainer.innerHTML = "";
+
+          // Create and append post elements for each image URL
+          // Initialize count variable
+          let count = 0;
+
+          allpostimage.forEach((imageUrl) => {
+            // Increment count for each iteration
+
+            console.log("---printing the count value---", count);
+
+            // Create post div
+            const postDiv = document.createElement("div");
+            postDiv.classList.add("post");
+            postDiv.id = postdetail[count].id;
+
+            postDiv.style.display = "inline-block";
+
+            // Create image element
+            const imgElement = document.createElement("img");
+            imgElement.src = imageUrl;
+            imgElement.alt = "Image";
+
+            const authorName = postdetail[count].authorName;
+            // const authorName = postIds[count].authorName;
+            const authorNameElement = document.createElement("div");
+            authorNameElement.textContent = `Uploaded by: ${authorName}`;
+            authorNameElement.classList.add("author-name");
+            console.log("-------nnnn", authorNameElement);
+
+            // const newPostDiv = document.createElement("div");
+            // newPostDiv.classList.add("post");
+
+            //for Captuion
+            const captionname = allpostcaption[count];
+            console.log("----------capiton--------", captionname);
+            const captionelement = document.createElement("div");
+            captionelement.textContent = `Caption: ${captionname}`;
+            captionelement.classList.add("author-name");
+            console.log("-------nnnn", authorNameElement);
+
+            // Create delete button element
+            const buttonElement = document.createElement("button");
+            buttonElement.textContent = "Delete";
+            // // buttonElement.classList.add('deleteId');
+            console.log("the button element postid", allpost[count].id);
+            buttonElement.id = allpost[count].id; // Use postId directly
+            // Add click event listener to delete button
+            buttonElement.addEventListener("click", function () {
+              const DeletePost = this.id;
+              console.log(DeletePost, "this is the delete id ");
+              deletePost(DeletePost);
+            });
+            // Create the comment section
+
+            let c = 0;
+
+            const commentsection01 = document.createElement("div");
+            commentsection01.classList.add("comment");
+
+            const form = document.createElement("form");
+            form.id = postDiv.id;
+            
+            form.innerHTML = `
+          <input type="text" name="commentmain" id="commentform" placeholder="Add a comment...">
+          <button type="submit">Post</button>
+          `;
+            // form.addEventListener("submit", handleFormSubmit);
+            //  form.addEventListener('submit', function(event) {
+            //   event.preventDefault();
+
+            //   const targetid = authorName;
+            //   const writerid=currentlogin;
+            //   const commendiv = document.createElement("div");
+            //   commendiv.classList.add("parentMessage");
+            //   commendiv.id=postDiv.id;
+            //   console.log("---the commendiv post id is ",commendiv.id);
+            // console.log("----the target  id is ",targetid);
+
+            //   const commentext = document.querySelector('input[name="commentmain"]').value;
+            //   commendiv.innerText = commentext + " --by " + currentlogin;
+            //   console.log("------the frist  comment  of commendiv element is ", commendiv.innerText);
+            //   document.querySelector('input[name="commentmain"]').value = "";
+            //   const replybutton = document.createElement("button");
+            //   replybutton.classList.add("commentReplyButton");
+            //   replybutton.innerText = "Reply";
+            //   commendiv.appendChild(replybutton)
+            //   replybutton.addEventListener('click', function() {
+            //     const replyForm = document.createElement("form");
+            //     replyForm.innerHTML = `
+            //       <input type="text" name="comment" placeholder="Add a reply...">
+            //       <button type="submit">Post Reply</button>
+            //     `;
+            //      commendiv.appendChild(replyForm);
+            //     replyForm.addEventListener('submit', function(event) {
+            //       event.preventDefault();
+            //       const replyText = document.querySelector('input[name="comment"]').value;
+            //       const replyDiv = document.createElement("div");
+            //       const targetid=currentlogin;
+            //       const writerid=currentlogin;
+            //       console.log("--------the target id",targetid);
+            //       replyDiv.innerText = replyText + ' -by ' + currentlogin;
+            //       // replyDiv.appendChild(replybutton)  adding button in replydiv but hold on for some time
+            //       console.log("------the parent message stored in ",replyDiv)// Assuming currentlogin is defined elsewhere
+            //       commendiv.appendChild(replyDiv);
+            //     });
+
+            //   });
+            //   commendiv.appendChild(replybutton);
+            //   commentsection01.appendChild(commendiv);
+            // });
+
+            // Create like button
+            const likeBtn = document.createElement("button");
+            likeBtn.classList.add("like-btn");
+            likeBtn.textContent = "Like";
+            likeBtn.addEventListener("click", function () {
+              console.log("Liked!");
+            });
+            // Append elements to post div
+            postDiv.appendChild(authorNameElement);
+            postDiv.appendChild(imgElement);
+            postDiv.appendChild(captionelement);
+            postDiv.appendChild(commentsection01);
+            postDiv.appendChild(form);
+
+            postDiv.appendChild(likeBtn);
+            postDiv.appendChild(buttonElement);
+
+            // Append post div to image container
+            imageContainer.appendChild(postDiv);
+
+            count++;
+          });
+        } catch (error) {
+          console.error("Error fetching images:", error);
+        }
+      });
+
+
+
+
+
+      /*----------------------------------------different section----------------*/
+
+      const fetchImageBtn = document.getElementById("fetchImageBtn");
+      //  const imageContainer = document.getElementById("imageContainer");
+      //  const postsHeading = document.getElementById("postsHeading");
+
+      fetchImageBtn.addEventListener("click", async function () {
+        try {
+          const response = await fetch(
+            "http://localhost:5000/api/v1/users/image"
+          );
+
+          if (!response.ok) {
+            throw new Error("Failed to fetch images");
+          }
+
+          const data = await response.json();
+          //const postid=data.postidonly;
+          //console.log("-------------all idsss----",postid)
+          const postImageUrls = data.images;
+          const Latestimage = data.latestImage;
+          const authorlatestone = data.authorlatest;
+          const postcaptionn = data.postcaption;
+          const latestpostids = data.Latestpostids;
+          console.log("------post caption-----", postcaptionn);
+          const captionlatest = data.latestcaption;
+          const postIds = data.posts;
+
+          console.log("--implemnent the postid-----\n", postIds);
+          // Assuming 'images' is the key for image URLs in the response
+          postsHeading.style.display = "none";
+          // Clear previous images
+          imageContainer.innerHTML = "";
+
+          // Create and append post elements for each image URL
+          // Initialize count variable
+          let count = 0;
+
+          Latestimage.forEach((imageUrl) => {
+            // Increment count for each iteration
+
+            console.log("---printing the count value---", count);
+
+            // Create post div
+            const postDiv = document.createElement("div");
+            postDiv.classList.add("post");
+            postDiv.id = postIds[count].id;
+            postDiv.style.display = "inline-block";
+
+            // Create image element
+            const imgElement = document.createElement("img");
+            imgElement.src = imageUrl;
+            imgElement.alt = "Image";
+
+            const authorName = authorlatestone[count];
+            // const authorName = postIds[count].authorName;
+            const authorNameElement = document.createElement("div");
+            authorNameElement.textContent = `Uploaded by: ${authorName}`;
+            authorNameElement.classList.add("author-name");
+            console.log("-------nnnn", authorNameElement);
+
+            // const newPostDiv = document.createElement("div");
+            // newPostDiv.classList.add("post");
+
+            //for Captuion
+            const captionname = captionlatest[count];
+            console.log("----------capiton--------", captionname);
+            const captionelement = document.createElement("div");
+            captionelement.textContent = `Caption: ${captionname}`;
+            captionelement.classList.add("author-name");
+            console.log("-------nnnn", authorNameElement);
+
+            // Create delete button element
+            const buttonElement = document.createElement("button");
+            buttonElement.textContent = "Delete";
+            // // buttonElement.classList.add('deleteId');
+            console.log("the button element postid", postIds[count].id);
+            buttonElement.id = postIds[count].id; // Use postId directly
+            // Add click event listener to delete button
+            buttonElement.addEventListener("click", function () {
+              const DeletePost = this.id;
+              console.log(DeletePost, "this is the delete id ");
+              deletePost(DeletePost);
+            });
+
+            // const buttonElement = document.createElement("button");
+            // buttonElement.textContent = "Delete";
+
+            // // Store post ID using the dataset attribute
+            //  buttonElement.dataset.postid = postid[count].id; // Use postId directly
+
+            // // Add click event listener to delete button
+            //   buttonElement.addEventListener("click", function () {
+            // // Retrieve the post ID from the dataset attribute
+            // const postId = this.dataset.postid;
+            // console.log(postId, "this is the delete id ");
+            // deletePost(postId);
+
+            // Create comment section
+         
+            const commentsection01 = document.createElement("div");
+            commentsection01.classList.add("comment");
+
+            const form = document.createElement("form");
+            form.id = postDiv.id;
+            
+            form.innerHTML = `
+          <input type="text" name="commentmain" id="commentform" placeholder="Add a comment...">
+          <button type="submit">Post</button>
+          `;
+            // Create like button
+            const likeBtn = document.createElement("button");
+            likeBtn.classList.add("like-btn");
+            likeBtn.textContent = "Like";
+            likeBtn.addEventListener("click", function () {
+              console.log("Liked!");
+            });
+            // Append elements to post div
+            postDiv.appendChild(authorNameElement);
+            postDiv.appendChild(imgElement);
+            postDiv.appendChild(captionelement);
+            postDiv.appendChild(commentsection01);
+            postDiv.appendChild(form);
+
+            // postDiv.appendChild(addCommentForm);
+            postDiv.appendChild(likeBtn);
+            postDiv.appendChild(buttonElement);
+           
+
+            // Append post div to image container
+            imageContainer.appendChild(postDiv);
+
+            count++;
+          });
+        } catch (error) {
+          console.error("Error fetching images:", error);
+        }
+      });
+
+
+         let username; let usernameid;
+      async function fetchUserDetailsAndDisplay() {
+    try {
+       
+        const response = await fetch('http://localhost:5000/api/v1/users/useridd', {
+        })
+        if (!response.ok) {
+            throw new Error('Failed to fetch user details');
+        }
+
+        const userData = await response.json();
+            username=userData.userdetail;
+            usernameid=userData.currentuserid;
+            console.log("---the username is ",usernameid);
+            console.log("---the username is ",username);
+       
+        // Update or append the original comment text with user details
+        // const commentText = document.createElement("h3");
+        // commentText.textContent = `${comment} by ${userData.userdetail}`; // Assuming user details contain 'username'
+        // console.log("-----------the commentText is ", commentText);
+        // commentDiv.innerHTML = ''; // Clear existing content
+        // commentDiv.appendChild(commentText);
+    } catch (error) {
+        console.error('Error fetching user details:', error.message);
+        // Handle error if needed
+    }
+  }
+
+
+   function printFormData(event) {
+    event.preventDefault();
+    var form = event.target;
+    var formId = form.id;
+    fetchpostauthordetail(formId)
+    async function fetchpostauthordetail(formId) {
+  console.log("THE ID OF POST IS ", formId);
+  
+    try {
+          const response = await fetch(
+            `http://localhost:5000/api/v1/users/postdetailcomment/${formId}`
+          );
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch user details');
+    }
+
+    const authordetail = await response.json();
+    const authorid=authordetail.authorid;
+    console.log("------the author id is ",authorid)
+    const authorname=authordetail.authorname;
+   return authorid
+  } catch (error) {
+    console.error('Error fetching user details:', error.message);
+  }
+    }
+    var inputs = form.querySelectorAll('input, textarea');
+    inputs.forEach(function (input) {
+        // Get the value of the input field
+        var inputValue = input.value.trim();
+        if (inputValue !== '') { // Check if the input value is not empty
+            console.log('Form ID:', formId);
+            console.log('Input Text:', inputValue);
+
+            // Create a div to display the original comment if it doesn't exist
+            const div = document.getElementById(formId);
+            let commentDiv = div.querySelector('.parentMessage');
+            if (!commentDiv) {
+                commentDiv = document.createElement("div");
+                commentDiv.classList.add("parentMessage");
+                div.appendChild(commentDiv);
+            }
+
+            // Update or append the original comment text
+            const commentText = document.createElement("h3");
+            fetchUserDetailsAndDisplay().then(() => {
+             const writername=usernameid;
+            commentText.textContent = inputValue + ' by ' + username;
+           console.log("----------the writer id is ",writername)
+           fetchpostauthordetail(formId).then(authorid => {
+
+            const targetname=authorid;
+            console.log("--the target name is ",targetname)
+           console.log("Author detail:", authorid);
+  
+            
+            console.log("-----------the commentText is ",commentText)
+            commentDiv.innerHTML = ''; 
+            commentDiv.appendChild(commentText);
+            form.reset();
+            console.log("---------the id of post again ",formId) 
+            sendallcomments(writername, targetname, formId, inputValue).then(commentid => {
+                    // Save commentid into commentDiv
+                    commentDiv.setAttribute('commentid', commentid);
+                
+
+          
+          
+           
+            // Create a button for replying to the comment if it doesn't exist
+            let replyButton = div.querySelector('.reply-button');
+            if (!replyButton) {
+                replyButton = document.createElement("button");
+                replyButton.textContent = "Reply";
+                replyButton.classList.add("reply-button");
+                commentDiv.appendChild(replyButton);
+            }
+          
+            // Create a form for replying to the comment if it doesn't exist
+          
+            let replyForm = div.querySelector('.reply-form');
+            if (!replyForm) {
+                replyForm = document.createElement("form");
+                replyForm.classList.add("reply-form");
+                replyForm.innerHTML = `
+                    <input type="text" name="reply" placeholder="Enter your reply">
+                    <button type="submit">Submit Reply</button>
+                `;
+                commentDiv.appendChild(replyForm);
+            
+            }
+          
+            // Add event listener to the reply button to toggle reply form visibility
+            replyButton.onclick = function() {
+                replyForm.style.display = replyForm.style.display === 'none' ? 'block' : 'none';
+            
+            };
+           
+            // Add event listener to the reply form to handle submission
+            replyForm.onsubmit = function(event) {
+                event.preventDefault();
+                const replyInput = replyForm.querySelector('input[name="reply"]');
+                const replyText = replyInput.value;
+                const replyDiv = document.createElement("div");
+                replyDiv.innerHTML = `<p>${replyText} : by ${username}:</p>`;
+                console.log("------the parent div is ",replyDiv)
+                commentDiv.appendChild(replyDiv);
+                console.log("--------the postid is after reply",formId)
+                 const Targetname=writername
+                 const writerid=usernameid;
+                 console.log("---------the commentid after reply",commentid)
+                 console.log("-------the writerid after reply",writername)
+                 console.log("---------the target id iserrr ",Targetname)
+               
+               sendallreply(commentid,Targetname,writerid,formId,replyText) 
+               replyForm.reset();
+           };
+          
+           })
+          })
+          });
+        
+        }
+      
+    });
+  
+}
+
+function sendallreply(commentid,Targetname,writerid,formId,replyText) {
+    const replyData = {
+        Targetname: Targetname,
+        writername: writerid,
+        postid: formId,
+        replycomment: replyText,
+        commentid:commentid, // Assuming targetname is the same as the authorname
+        
+    };
+    console.log("--------all then reply data ",replyData)
+
+    fetch("http://localhost:5000/api/v1/users/replybyuser", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(replyData),
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error("Failed to save reply");
+        }
+    }).catch(error => {
+        console.error("Error saving reply:", error);
+    });
+}
+
+
+async function sendallcomments(writername, targetname, formId, inputValue) {
+    const commentData = {
+        writername: writername,
+        targetname: targetname, // Assuming targetname is the same as the authorname
+        postid: formId,
+        comment: inputValue
+    };
+
+    try {
+        const response = await fetch("http://localhost:5000/api/v1/users/commentbyuser", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(commentData),
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to save comment");
+        }
+
+        const responseData = await response.json();
+        const { allcomments, commentid } = responseData;
+
+        console.log("Comments are saved: ", allcomments);
+        console.log("The main comment id is: ", commentid); 
+        return commentid;
+        // Do something with the commentid if needed
+
+    } catch (error) {
+        console.error("Error saving comment:", error);
+    }
+}
+
+document.addEventListener('submit', printFormData);
+
+
+    </script>
+    
+  </body>
+</html>

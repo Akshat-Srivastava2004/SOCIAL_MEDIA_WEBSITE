@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa; /* Light gray background color */
+      margin: 0;
+      padding: 0;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #0a42bb; /* White background color */
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Darker shadow for depth */
+    }
+    
+    .profile-header {
+      display: flex;
+      align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #007bff; /* Blue border bottom */
+    }
+    
+    .profile-photo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid #ffffff; /* White border around the circle */
+      background-color: #007bff; /* Blue background color */
+    }
+    
+    .profile-photo img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+    
+    .profile-info {
+      margin-left: 20px;
+    }
+    
+    .profile-username {
+      font-size: 20px;
+      font-weight: bold;
+      color: #333333; /* Dark text color */
+    }
+    
+    .profile-posts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-gap: 20px;
+      margin-top: 20px;
+    }
+    
+    .post {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background-color: #0cdde4; /* White background color */
+      padding: 10px;
+    }
+    
+    .post img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Comment Section Styles */
+    #comment-section {
+      margin-top: 20px;
+    }
+
+    #comment {
+      background-color: #f1f1f1;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    #comment #reply {
+      margin-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="profile-header">
+      <div class="profile-photo">
+        <img src="" alt="Profile Photo" id="profilephoto" style="width: 90px; height:80px;">
+      </div>
+      <div class="profile-info">
+        <div id="authorname">
+          <h5 id="name"></h5>
+        </div>
+        <!-- Add more profile information here -->
+      </div>
+    </div>
+    <div class="profile-posts">
+      <div class="post">
+        <img src="" alt="Post 1" id="postphoto" style="width: 100px; height: 100px;">
+        <h5 id="caption" ></h5>
+        <h6 id="created"></h6>
+        <h6 id="updated"></h6>
+        
+        <!-- Comment Section -->
+        <div id="comment-section">
+          <!-- Sample Comment -->
+          <div id="comment">
+            <p>Sample Comment Text</p>
+            <div id="reply">
+              <p id="reply01">Reply to Sample Comment Text</p>
+            </div>
+          </div>
+          <!-- End Sample Comment -->
+          <!-- You can dynamically generate comments and replies here using JavaScript -->
+        </div>
+        <!-- End Comment Section -->
+      </div>
+    </div>
+  </div>
+  <script>
+    
+
+
+
+    const reply=document.getElementById("reply")
+   const comment=document.getElementById("comment")
+   const commentsection=document.getElementById("comment-section")
+   const profilephoto=document.getElementById("profilephoto")
+   const postphoto=document.getElementById("postphoto")
+   const caption=document.getElementById("caption")
+   const created=document.getElementById("created")
+   const updated=document.getElementById("updated")
+   const authorname=document.getElementById("authorname");
+   const name = document.getElementById("name");
+function getCookie(cookiedata) {
+    const cookies = document.cookie.split(';');
+    console.log("------cookie----",cookies); 
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim(); 
+       
+        if (cookie.startsWith(cookiedata + '=')) {
+           
+           const cookieValue = cookie.substring(cookiedata.length + 1);
+            console.log("------------the cookie value is ",cookieValue)
+            const userDetailsObject = {};
+            const data= JSON.parse(decodeURIComponent(cookieValue));
+
+            if (data && data.alldetailsuser) {
+    
+           data.alldetailsuser.forEach((item, index) => {
+           userDetailsObject[index] = item;
+           });
+           return userDetailsObject
+}
+          }
+        }
+    }
+
+
+
+    function getCookie01(cookiedata01) {
+    const cookies = document.cookie.split(';');
+    console.log("------cookie----",cookies); 
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim(); 
+       
+        if (cookie.startsWith(cookiedata01 + '=')) {
+           
+           const cookieValue01 = cookie.substring(cookiedata01.length + 1);
+            console.log("------------the cookie value is ",cookieValue01)
+            const userDetailsObject01 = {};
+            const data= JSON.parse(decodeURIComponent(cookieValue01));
+
+            if (data && data.alluserdetail) {
+    
+           data.alluserdetail.forEach((item, index) => {
+           userDetailsObject01[index] = item;
+           });
+           return userDetailsObject01
+}
+          }
+        }
+    }
+
+function getcookie03(cookiecomment){
+  const cookies = document.cookie.split(';');
+    console.log("------cookie----",cookies); 
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim(); 
+       
+        if (cookie.startsWith(cookiecomment + '=')) {
+           
+           const cookieValue01 = cookie.substring(cookiecomment.length + 1);
+            console.log("------------the cookie value is ",cookieValue01)
+            const usercommentObject01 = {};
+            const data= JSON.parse(decodeURIComponent(cookieValue01));
+
+            if (data && data.allcomment) {
+    
+           data.allcomment.forEach((item, index) => {
+           usercommentObject01[index] = item;
+           });
+           return usercommentObject01
+}
+          }
+        }
+}
+
+function getcookie04(cookiereply){
+  const cookies = document.cookie.split(';');
+    console.log("------cookie----",cookies); 
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim(); 
+       
+        if (cookie.startsWith(cookiereply + '=')) {
+           
+           const cookieValue01 = cookie.substring(cookiereply.length + 1);
+            console.log("------------the cookie value is ",cookieValue01)
+            const userreplyObject01 = {};
+            const data= JSON.parse(decodeURIComponent(cookieValue01));
+
+            if (data && data.allreplyies) {
+    
+           data.allreplyies.forEach((item, index) => {
+           userreplyObject01[index] = item;
+           });
+           return userreplyObject01
+}
+          }
+        }
+}
+
+
+const userreply=getcookie04('allreplyies');
+console.log("All the reply of that post is ",userreply[0])
+reply.innerText=userreply[0].Message+ "-by " +userreply[0].Authorid;
+
+const usercomment=getcookie03('allcomment');
+console.log("---the comments of that post is ",usercomment[0]);
+
+comment.innerText=usercomment[0].comment+" -by " + usercomment[0].author;
+
+if(usercomment[0].author===userreply[0].Targetid){
+  commentsection.appendChild(reply)
+}
+const userDetails = getCookie('alldetailsuser');
+console.log('user detail of Post Image:', userDetails[0]);
+const userDetails01 = getCookie01('alluserdetail');
+console.log("---------the user details are",userDetails01);
+
+
+postphoto.src=userDetails[0].Postimage;
+profilephoto.src=userDetails01[0].Profilephoto;
+caption.innerText="caption :" + userDetails[0].caption;
+created.innerText="created at :" + userDetails[0].createdAt;
+updated.innerText="updated at :" + userDetails[0].updatedAt;
+
+name.textContent="username:" + userDetails01[0].username;
+
+authorname.appendChild(name);
+
+  </script>
+  

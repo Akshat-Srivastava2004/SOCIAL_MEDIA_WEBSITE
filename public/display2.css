@@ -1,0 +1,216 @@
+.container {
+    text-align: center;
+    background-color: #ffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .image-container {
+    display: flex;
+    flex-direction: column; /* Display posts vertically */
+    align-items: center; /* Center the posts horizontally */
+    padding: 10px; /* Add some padding */
+    margin-top: 20px;
+  }
+
+  .post {
+    overflow: hidden;
+    width: 400px; /* Set a fixed width for each post */
+    /* height: 600px; */
+    margin-bottom: 40px; /* Add some space between posts */
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
+  .post img {
+    width: 100%; /* Make images fill the post container */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  .comment-section {
+    padding: 10px;
+    border-top: 1px solid #ccc;
+  }
+
+  .comment {
+    margin-bottom: 5px;
+  }
+
+  .add-comment-form {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .add-comment-form input[type="text"] {
+    width: 60%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+
+  .add-comment-form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .add-comment-form button:hover {
+    background-color: #0056b3;
+  }
+
+  .author-name {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 10px;
+  }
+
+  #fetchImageBtn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+
+  .topnav {
+    overflow: hidden;
+    background-color: #333;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .name {
+    color: #f2f2f2;
+    padding: 14px 16px;
+    font-size: 17px;
+  }
+
+  .buttons a {
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+
+  .buttons a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+  .buttons a.active {
+    background-color: #04aa6d;
+    color: white;
+  }
+
+  .topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+  .topnav a.active {
+    background-color: #04aa6d;
+    color: white;
+  }
+
+  .search-container {
+    float: right;
+  }
+
+  .search-container input[type="text"] {
+    padding: 6px;
+    margin-top: 8px;
+    margin-right: 16px;
+    font-size: 17px;
+    border: none;
+  }
+
+  .search-container button {
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+  }
+  .comment{
+      /* width:35%; */
+      margin:0 auto;
+  }
+
+  a {
+    margin-right: 20px; /* Adjust the value to set the desired space between the links */
+  }
+
+  #fetchallImageBtn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+
+  #namesList {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+  }
+
+  /* Style for each list item */
+  #namesList li {
+    background-color: #f4f4f4; /* Light gray background */
+    padding: 10px; /* Padding around each name */
+    margin-bottom: 5px; /* Add some spacing between each name */
+    border-radius: 5px; /* Add rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  }
+  #namesList a {
+    text-decoration: none;
+  }
+  .small-button {
+  width: 80px; /* Adjust width as needed */
+  height: 30px; /* Adjust height as needed */
+  font-size: 12px; /* Adjust font size as needed */
+  /* Add any other styles as needed */
+}
+.parentMessage {
+      background-color: #f7efef;
+      border-radius:10px 10px 10px 10px;
+      padding: 10px;
+      margin-bottom: 15px;
+  }
+  .commentReplyButton  {
+      cursor: pointer;
+      padding: 3px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      margin-right: 10px;
+  }
+   
+  .ReplyParentMessage {
+      background-color: #f7efef;
+      border-radius:10px 10px 10px 10px;
+      padding: 10px;
+      margin-left: 10%;
+      margin-bottom: 15px;
+  }
+  .ReplyChildMessage {
+      background-color: #f7efef;
+      border-radius:10px 10px 10px 10px;
+      padding: 10px;
+      margin-left: 20%;
+      margin-bottom: 15px;
+  }
+  

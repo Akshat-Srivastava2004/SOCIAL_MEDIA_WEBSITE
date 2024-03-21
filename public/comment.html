@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment section</title>
+  <style>
+    .comment{
+        width:35%;
+        margin:0 auto;
+    }
+    .parentMessage {
+        background-color: #f7efef;
+        border-radius:10px 10px 10px 10px;
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .ReplyParentMessage {
+        background-color: #f7efef;
+        border-radius:10px 10px 10px 10px;
+        padding: 10px;
+        margin-left: 10%;
+        margin-bottom: 15px;
+    }
+    
+    .ReplyChildMessage {
+        background-color: #f7efef;
+        border-radius:10px 10px 10px 10px;
+        padding: 10px;
+        margin-left: 20%;
+        margin-bottom: 15px;
+    }
+    
+    .commentTitle {
+        font-size: 0.9em;
+        font-weight: bold;
+        color: #333;
+    }
+    
+    .commentBody {
+        margin-top: 10px;
+        padding-top: 5px;
+        padding-bottom: 10px;
+        text-align: left;
+    
+        color: #555;
+    }
+    
+    .commentFooter {
+        display: flex;
+    }
+    
+    .commentReplyButton,
+    .commentLikeButton {
+        cursor: pointer;
+        padding: 3px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        margin-right: 10px;
+    }
+    
+    .commentReplyButton:hover,
+    .commentLikeButton:hover {
+        background-color: #eee;
+    }
+  </style>
+</head>
+<body>
+<div id="commentContainer">
+
+</div>
+<!-- <div id="commentMessageBar" class="comment">
+    <input type="text" placeholder="Add a comment" style="width: 90%;"> -->
+    <button >
+        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="10" height="10" viewBox="0 0 50 50">
+            <path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z"></path>
+        </svg>
+    </button>
+    
+    <script>
+        //even listner add -> where my all comments will be placed
+        document.addEventListener('DOMContentLoaded', function () {
+            const commentContainer = document.getElementById('commentContainer');
+
+            //comment database
+        const commentdatabase=[{
+            Postid:'01',
+            commentid:'aa',
+            writerid:'@yash',
+            Targetid:'@akshat',
+            Message:"nice picture "
+            },
+        {
+            Postid:'01',
+            commentid:'ab',
+            writerid:'@yash',
+            Targetid:'@akshat',
+            Message:"nice picture "
+        }]
+
+            //post database
+          const postdatabase=[{
+            Postid:'01'
+          }]
+          //reply database
+          const replydatabase=[{
+            Postid:'01',
+            commmentid:'aa',
+            writerid:'@prakhar',
+            Targetid:'@yash',
+            counter:"1",
+            Message:"saale kutte ",
+          },{
+            Postid:"01",
+            commentid:'aa',
+            writerid:"@rahul",
+            Targetid:"@parkhar",
+            counter:"0",
+            Message:"ache to hain be "
+          }
+          ,{
+            Postid:"01",
+            commentid:'ab',
+            writerid:"@rahul",
+            Targetid:"@yash",
+            counter:"0",
+            Message:"main hu dusra reply main "
+          }]
+
+        //   function message(){
+        //     //for all posts
+        //     postdatabase.forEach(postMessage=> {
+        //         //main comment box
+        //         const commentBox = document.createElement("div");
+        //         commentBox.classList.add("comment");
+        //         const comments = commentdatabase.filter(comment => comment.Postid===postMessage.Postid);
+        //         console.log(comments);
+        //         //for all comments
+        //         comments.forEach(commentMessage =>{
+        //             //html code for comment section 
+        //             const ParentComment = document.createElement("div");
+        //             ParentComment.classList.add("parentMessage");
+        //             ParentComment.innerHTML = `
+        //                 <h1>${commentMessage.Postid}</h1>
+        //                 <h3>${commentMessage.commentid}</h3>
+        //                 <h3>${commentMessage.writerid}</h3>
+        //                 <h3>${commentMessage.Targetid}</h3>
+        //                 <h3>${commentMessage.Message}</h3>
+                
+        //             `;
+                    
+
+        //             //for all replys
+        //             const replies = replydatabase.filter(reply=>reply.commentid === commentMessage.commentid);
+        //             console.log(replies);
+        //             //html code for reply section
+        //             replies.forEach(replyMessage=>{
+        //                 const replyMain = document.createElement("div");
+        //                 console.log(replyMessage,commentMessage);
+        //                 if(replyMessage.Targetid===commentMessage.writerid){
+        //                     //console.log(replyMessage,commentMessage);
+        //                     replyMain.classList.add("ReplyParentMessage");
+        //                 }else{
+        //                     replyMain.classList.add("ReplyChildMessage")
+        //                 }
+        //                 replyMain.innerHTML=`
+        //                             <h1>${replyMessage.Postid}</h1>
+        //                             <h3>${replyMessage.commentid}</h3>
+        //                             <h3>${replyMessage.writerid}</h3>
+        //                             <h3>${replyMessage.Targetid}</h3>
+        //                             <h3>${replyMessage.Message}</h3>
+        //                     `;
+        //                 ParentComment.appendChild(replyMain);
+        //             })
+                    
+
+        //             commentBox.appendChild(ParentComment);
+        //         });
+
+        //         commentContainer.appendChild(commentBox);
+        //     });
+
+
+        //   }
+        //   message(); 
+
+        function message(){
+            let counter=1;
+          postdatabase.forEach(post=>{
+            const allcomments=commentdatabase.filter(comment=>comment.Postid===post.Postid);
+            const commentsection=document.createElement("div")
+            commentsection.className = 'comment';
+            
+
+
+            for(let i=0; i<commentdatabase.length; i++){
+                const commentbox=document.createElement("div")
+                commentbox.className = 'parentMessage';
+                const parentcommentid=commentdatabase[i].commentid +''+commentdatabase[i].writerid +''+commentdatabase[i].Message;
+
+                commentbox.innerHTML=`<h1>${parentcommentid}</h1>`;
+
+                const replybutton=document.createElement("button")
+                replybutton.classList.add("commentReplyButton")
+                replybutton.innerHTML =`<h3>Reply</h3>`;
+                commentbox.appendChild(replybutton)
+                replybutton.id=parentcommentid;
+                commentsection.appendChild(commentbox);
+
+
+                // replybutton.addEventListener('click',function(){                
+                
+                for(let j=0; j<replydatabase.length; j++ ){
+                    console.log("the id after clicking the replybutton",  replybutton.id)
+                
+                    if(replydatabase[j].Targetid===commentdatabase[i].writerid){
+                        const replydiv=document.createElement("div");
+                        replydiv.classList.add("ReplyParentMessage")
+                        replydiv.innerText=replydatabase[j].writerid + '' + replydatabase[j].Targetid + ''+replydatabase[j].Message;
+
+
+                        const parentseconddetail=replydatabase[j].writerid+''+replydatabase[j].Message;
+                        console.log("------the 2nd parent writer id is ",parentseconddetail);
+
+
+                        const replybuttonMessage=document.createElement("button")
+                        replybuttonMessage.classList.add("commentReplyButton")
+                        replybuttonMessage.innerHTML =`<h3>Reply</h3>`;
+                        replydiv.appendChild(replybuttonMessage)
+                        commentbox.appendChild(replydiv);             
+                    }
+                    else{
+                        const subReplyDiv = document.createElement("div");
+                        subReplyDiv.classList.add("ReplyChildMessage")
+                        subReplyDiv.innerText=replydatabase[j].writerid + '' + replydatabase[j].Targetid + ''+replydatabase[j].Message;
+                        commentbox.appendChild(subReplyDiv);    
+                }  
+            }
+
+            //    })
+               
+               commentsection.appendChild(commentbox);
+                     
+            }
+            commentContainer.append(commentsection);
+
+          })
+        }
+        message();
+     });
+
+    </script>
+</body>
+</html>
