@@ -36,9 +36,8 @@ app.use(express.static("public"))   // access the file present in public
 app.use(cookieParser())             
 
 // app.use("/api/v1/users", userRouter);
-app.use("/api/v1/users", cors({
+app.use(cors({
     origin: 'https://social-media-website-gw12.onrender.com'
   }), userRouter);
-  
 
 export { app };
