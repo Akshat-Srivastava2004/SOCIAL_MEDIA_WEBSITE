@@ -19,7 +19,7 @@ router.route("/register").post(
     ]),
     registerUser
 )
-router.route("/login").post(loginuser)
+router.route("https://social-media-website-gw12.onrender.com/login.html").post(loginuser)
 router.route("/Postuser").post(
     upload.fields([
         {
