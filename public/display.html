@@ -329,7 +329,7 @@
       fetchallImageBtn.addEventListener("click", async function () {
         try {
           const response = await fetch(
-            "http://localhost:5000/api/v1/users/allpost"
+            "https://social-media-website-gw12.onrender.com/allpost"
           );
           if (!response.ok) {
             throw new Error("failed to fetch the image ");
