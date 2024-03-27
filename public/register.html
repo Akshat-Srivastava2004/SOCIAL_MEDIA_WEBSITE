@@ -1,0 +1,100 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration/Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.2/socket.io.js" integrity="sha512-VJ6+sp2E5rFQk05caiXXzQd1wBABpjEj1r5kMiLmGAAgwPItw1YpqsCCBtq8Yr1x6C49/mTpRdXtq8O2RcZhlQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        body{
+            background: url(https://images7.alphacoders.com/108/thumb-1920-1089110.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+           
+        }
+        @media (min-width: 1025px) {
+            .h-custom {
+                height: 200vh !important;
+            }
+        }
+        .login-link {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff; /* Blue color */
+        color: white;
+        text-decoration: none; /* Remove underline */
+        border-radius: 5px;
+        font-family: Arial, sans-serif;
+    }
+
+    /* Hover effect */
+    .login-link:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+    </style>
+</head>
+<body>
+
+<section class="h-100 h-custom">
+    <div class="container py-5 h-100" style="width: 1000px; height: 50vh;">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-8 col-xl-6">
+                <div class="card rounded-3">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img3.webp"
+                         class="w-100" style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;"
+                         alt="Sample photo">
+                    <div class="card-body p-4 p-md-5">
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Registration Info</h3>
+
+                        <form action="http://localhost:5000/api/v1/users/register" method="post" enctype="multipart/form-data">
+
+                            <div class="form-outline mb-4">
+                                <input type="text" id="form3Example1q" name="FirstName" class="form-control" />
+                                <label class="form-label"  for="FirstName">First Name</label>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <input type="text" id="form3Example1q"  name="LastName" class="form-control" />
+                                <label class="form-label"  for="LastName">Last Name</label>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <input type="text" id="form3Example1q" name="username" class="form-control" />
+                                <label class="form-label"  for="username">Username</label>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <input type="email" id="form3Example1q" name="Email" class="form-control" />
+                                <label class="form-label"  for="Email">Email</label>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <input type="password" name="Password" id="form3Example1q" class="form-control" />
+                                <label class="form-label" n for="form3Example1q">Password</label>
+                            </div>
+                           
+                            <div class="form-outline mb-4">
+                                <input type="file" id="formFile" name="Profilephoto" class="form-control" accept="image/*" required/>
+                                <label class="form-label" for="formFile">Profilephoto</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-success btn-lg mb-1">Submit</button>
+                           <center> <a href="login.html" class="login-link">Redirect to login</a></center>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+</script>
+
+</body>
+</html>

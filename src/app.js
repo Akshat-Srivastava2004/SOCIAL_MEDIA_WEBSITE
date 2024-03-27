@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import userRouter from './routes/user.routes.js';
-
+import path from "path";
 
 console.log("inside the app.js file");
 // MIDDLEWARE
@@ -31,7 +31,7 @@ app.use(express.urlencoded({
     extended:true,                   //configuration -ye url ke liye jabh user url enter kar to jo data d
     limit:"16kb"                    // display hoga to upper jo url ayega usko manage kar le 
 }))
-app.use(express.static("public"))   // access the file present in public 
+ app.use(express.static("public"))   // access the file present in public 
 
 app.use(cookieParser())             
 
