@@ -28,10 +28,10 @@ const userdetail = async (req, res) => {
 
     
     return res
-    .cookie('alldetailsuser', cookiedata, { domain: 'https://social-media-website-gw12.onrender.com',})
-    .cookie('alluserdetail',cookiedata01,{ domain: '.onrender.com',})
-    .cookie('allcomment',cookiecomment,{ domain: '.onrender.com',})
-    .cookie("allreplyies",cookiereply,{ domain: '.onrender.com',})
+    // .cookie('alldetailsuser', cookiedata, { domain: 'https://social-media-website-gw12.onrender.com',})
+    // .cookie('alluserdetail',cookiedata01,{ domain: '.onrender.com',})
+    // .cookie('allcomment',cookiecomment,{ domain: '.onrender.com',})
+    // .cookie("allreplyies",cookiereply,{ domain: '.onrender.com',})
     .redirect('/profile.html');
     
   } catch (error) {
