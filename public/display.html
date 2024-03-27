@@ -254,7 +254,7 @@
         console.log("------the enter value of user ----", namesvalue);
         try {
           const response = await fetch(
-            `https://social-media-website-gw12.onrender.com/${namesvalue}`,
+            `https://social-media-website-gw12.onrender.com/usernamedetail/${namesvalue}`,
             {
               method: "GET",
               headers: {
@@ -280,7 +280,7 @@
             const anchor = document.createElement("a");
             anchor.textContent = name.user;
             console.log("-----user detai ---", anchor.textContent);
-            anchor.href = `https://social-media-website-gw12.onrender.com/${name.id}`;
+            anchor.href = `https://social-media-website-gw12.onrender.com//detailuser/${name.id}`;
             console.log("-----user detai is  ---", anchor.href);
             listItem.appendChild(anchor);
             console.log("------wddwd----", anchor.textContent);
