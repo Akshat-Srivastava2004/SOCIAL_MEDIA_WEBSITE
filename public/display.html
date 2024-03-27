@@ -254,7 +254,7 @@
         console.log("------the enter value of user ----", namesvalue);
         try {
           const response = await fetch(
-            `http://localhost:5000/api/v1/users/usernamedetail/${namesvalue}`,
+            `https://social-media-website-gw12.onrender.com/${namesvalue}`,
             {
               method: "GET",
               headers: {
@@ -280,7 +280,7 @@
             const anchor = document.createElement("a");
             anchor.textContent = name.user;
             console.log("-----user detai ---", anchor.textContent);
-            anchor.href = `http://localhost:5000/api/v1/users/detailuser/${name.id}`;
+            anchor.href = `https://social-media-website-gw12.onrender.com/${name.id}`;
             console.log("-----user detai is  ---", anchor.href);
             listItem.appendChild(anchor);
             console.log("------wddwd----", anchor.textContent);
@@ -299,9 +299,9 @@
       async function deletePost(postId) {
         try {
           console.log("the post id to be deleted is ", postId);
-          console.log(`http://localhost:5000/api/v1/users/delete/${postId}`);
+          console.log(`https://social-media-website-gw12.onrender.com/delete/${postId}`);
           const response = await fetch(
-            `http://localhost:5000/api/v1/users/delete/${postId}`,
+            `https://social-media-website-gw12.onrender.com/delete/${postId}`,
             {
               method: "DELETE",
               headers: {
@@ -501,7 +501,7 @@
       fetchImageBtn.addEventListener("click", async function () {
         try {
           const response = await fetch(
-            "http://localhost:5000/api/v1/users/image"
+            "https://social-media-website-gw12.onrender.com/image"
           );
 
           if (!response.ok) {
