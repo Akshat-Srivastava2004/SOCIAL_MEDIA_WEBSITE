@@ -7,7 +7,7 @@ import { userdetail ,userfirstname} from "../controller/userdetail.controller.js
 import { useridentity } from "../controller/useridentity.controller.js";
 import { postauthordetail } from "../controller/useridentity.controller.js";
 import { Commentbyloginuser,replydatabase } from "../controller/comment.controller.js";
-
+import { adminlogin } from "../controller/admin.controller.js";
 const router=Router()
 
 router.route("/register").post(
@@ -40,6 +40,7 @@ router.route("/useridd").get(useridentity)
 router.route("/postdetailcomment/:id").get(postauthordetail)
 router.route("/commentbyuser").post(Commentbyloginuser)
 router.route("/replybyuser").post(replydatabase)
+router.route("/adminlogin").post(adminlogin)
 export default router
 
 
