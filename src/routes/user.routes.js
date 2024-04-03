@@ -10,6 +10,7 @@ import { Commentbyloginuser,replydatabase } from "../controller/comment.controll
 import { adminlogin } from "../controller/admin.controller.js";
 import { allpost } from "../controller/admin.controller.js";
 import { Allregisteruserdetail } from "../controller/admin.controller.js";
+import { deleteuserdetail } from "../controller/admin.controller.js";
 const router=Router()
 
 router.route("/register").post(
@@ -45,6 +46,7 @@ router.route("/replybyuser").post(replydatabase)
 router.route("/adminlogin").post(adminlogin)
 router.route("/allpostadmin").get(allpost)
 router.route("/alluserdetailforadmin").get(Allregisteruserdetail)
+router.route("/userdeletepermanent/:id").delete(deleteuserdetail)
 export default router
 
 

@@ -63,4 +63,22 @@ const Allregisteruserdetail=async(req,res)=>{
 
     return res.status(200).json({alluserdetail:alluserdetail,alluserusername:alluserusername,alluserfirstname:alluserfirstname,alluserlastname:alluserlastname,alluseremail:alluseremail});
 }
-export {adminlogin,allpost,Allregisteruserdetail}
+const deleteuserdetail=async(req,res)=>{
+    const userid=req.params.id;
+    console.log("user id is here ",userid);
+    try {
+     const deletedUser = await User.findByIdAndDelete(userid);
+
+     if(deletedUser){
+        return res.status(201).json({message:"User deleted successfully"})
+        
+        
+     }
+     return res.status(404).json({ message: 'User not deleted successfully' });
+
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}
+export {adminlogin,allpost,Allregisteruserdetail,deleteuserdetail}
