@@ -2,7 +2,7 @@ import multer from "multer";
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, "https://social-media-website-gw12.onrender.com/disk")                           // path where all files will stored 
+      cb(null, "./public/temp")                           // path where all files will stored 
     },
     filename: function (req, file, cb) {
       
