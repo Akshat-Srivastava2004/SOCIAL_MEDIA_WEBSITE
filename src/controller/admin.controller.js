@@ -68,7 +68,7 @@ const deleteuserdetail=async(req,res)=>{
     console.log("user id is here ",userid);
     try {
      const deletedUser = await User.findByIdAndDelete(userid);
-
+     const deletepostalso=await Post.findOneAndDelete({author:userid})
      if(deletedUser){
         return res.status(201).json({message:"User deleted successfully"})
         
@@ -81,4 +81,23 @@ const deleteuserdetail=async(req,res)=>{
         return res.status(500).json({ message: 'Internal server error' });
     }
 }
-export {adminlogin,allpost,Allregisteruserdetail,deleteuserdetail}
+
+const deleteuserpost=async(req,res)=>{
+    const postid=req.params.id;
+    console.log("user id is here ",postid);
+    try {
+     const deletedpost = await Post.findByIdAndDelete(postid);
+
+     if(deletedpost){
+        return res.status(201).json({message:"User post deleted successfully"})
+        
+        
+     }
+     return res.status(404).json({ message: 'User post not  deleted successfully' });
+
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}
+export {adminlogin,allpost,Allregisteruserdetail,deleteuserdetail,deleteuserpost}

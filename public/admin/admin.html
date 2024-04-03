@@ -132,7 +132,12 @@ async function showallpost() {
             const deletebutton=document.createElement("button");
             deletebutton.innerText="Delete";
             deletebutton.classList.add("delete-btn");
-            
+            deletebutton.addEventListener('click', function() {
+                deletebutton.id=allpostids[index].id;
+                        console.log('Delete button clicked for user:', deletebutton.id);
+                        deleteuserpost(allpostids[index].id,postsContainer);
+                    });
+
 
 
             const blockbutton=document.createElement("button");
@@ -150,7 +155,19 @@ async function showallpost() {
         console.error("Error:", error);
     }
 }
-
+async function deleteuserpost(postid,postsContainer){
+    const response= await fetch(`https://social-media-website-gw12.onrender.com/${postid}`,{
+        method: 'DELETE'
+    });
+    if(response.ok){
+        console.log("-----user has been  deleted from database")
+        postsContainer.remove();
+        
+    }
+    else{
+        console.log("user  still not deleted from database ")
+    }
+}
 
     </script>
 </body>
