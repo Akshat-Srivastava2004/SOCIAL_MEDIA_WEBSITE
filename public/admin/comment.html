@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details</title>
+    <style>
+          body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #66bb6a;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .delete-btn,
+        .block-btn {
+            background-color: #e74c3c; /* Red buttons */
+            color: #fff; /* White text */
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <h1>User Comment Details for Admin</h1>
+    <table id="userTable">
+        <tr>
+            <th>authorid</th>
+            <th>postid</th>
+            <th>commentid</th>
+            <th>targetid</th>
+            <th>comment</th>
+            <th>adminrights</th>
+        </tr>
+    </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            showAllUsercomment();
+        });
+
+        async function showAllUsercomment() {
+            try {
+                const response = await fetch('https://social-media-website-gw12.onrender.com/allcommentforadmin');
+                const usercomment = await response.json();
+                console.log(usercomment);
+                const userData01 = usercomment.allcomments;
+                
+                const userTable = document.getElementById('userTable');
+
+                userData01.forEach(user => {
+                    const row = userTable.insertRow();
+
+                    const authorid = row.insertCell(0);
+                    authorid.textContent = user.author;
+
+                    const postid = row.insertCell(1);
+                    postid.textContent = user.post;
+
+                    const commentid = row.insertCell(2);
+                    commentid.textContent = user._id;
+
+                    const targetid = row.insertCell(3);
+                    targetid.textContent = user.Targetid;
+
+                    const comment = row.insertCell(4);
+                    comment.textContent = user.comment;
+
+                    const deleteCell = row.insertCell(5);
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.classList.add("delete-btn");
+
+                    deleteButton.addEventListener('click', function () {
+                        deleteButton.id = user._id;
+                        deleteusercomment(user._id,row);
+                        console.log('Delete button clicked for user:', deleteButton.id);
+                    });
+                    deleteCell.appendChild(deleteButton);
+                });
+            } catch (error) {
+                console.error('Error fetching user details:', error);
+            }
+        }
+        async function deleteusercomment(userid,row){
+        const response= await fetch(`https://social-media-website-gw12.onrender.com/deleteusercomment/${userid}`,{
+            method: 'DELETE'
+        });
+        if(response.ok){
+            console.log("-----user has been  deleted from database")
+            row.remove();
+        }
+        else{
+            console.log("user  still not deleted from database ")
+        }
+    }
+        </script>
+</body>
+</html>

@@ -12,6 +12,10 @@ import { allpost } from "../controller/admin.controller.js";
 import { Allregisteruserdetail } from "../controller/admin.controller.js";
 import { deleteuserdetail } from "../controller/admin.controller.js";
 import { deleteuserpost } from "../controller/admin.controller.js";
+import { allcomment } from "../controller/admin.controller.js";
+import { allreply } from "../controller/admin.controller.js";
+import { deleteusercomment } from "../controller/admin.controller.js";
+import { deleteuserreply } from "../controller/admin.controller.js";
 const router=Router()
 
 router.route("/register").post(
@@ -49,6 +53,10 @@ router.route("/allpostadmin").get(allpost)
 router.route("/alluserdetailforadmin").get(Allregisteruserdetail)
 router.route("/userdeletepermanent/:id").delete(deleteuserdetail)
 router.route("/userpostdeleted/:id").delete(deleteuserpost)
+router.route("/allcommentforadmin").get(allcomment)
+router.route("/allreplyforadmin").get(allreply)
+router.route("/deleteusercomment/:id").delete(deleteusercomment)
+router.route("/deleteuserreply/:id").delete(deleteuserreply)
 export default router
 
 

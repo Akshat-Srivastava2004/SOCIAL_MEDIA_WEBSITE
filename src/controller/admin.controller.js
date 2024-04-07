@@ -4,7 +4,8 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { Post } from "../model/post.model.js";
 import { User } from "../model/user.model.js";
-
+import { Comment } from "../model/comment.model.js";
+import { Reply } from "../model/reply.model.js";
 const adminlogin=async(req,res)=>{
     const {adminname,Password}=req.body;
     try {
@@ -63,6 +64,8 @@ const Allregisteruserdetail=async(req,res)=>{
 
     return res.status(200).json({alluserdetail:alluserdetail,alluserusername:alluserusername,alluserfirstname:alluserfirstname,alluserlastname:alluserlastname,alluseremail:alluseremail});
 }
+
+
 const deleteuserdetail=async(req,res)=>{
     const userid=req.params.id;
     console.log("user id is here ",userid);
@@ -100,4 +103,55 @@ const deleteuserpost=async(req,res)=>{
         return res.status(500).json({ message: 'Internal server error' });
     }
 }
-export {adminlogin,allpost,Allregisteruserdetail,deleteuserdetail,deleteuserpost}
+
+const allcomment=async(req,res)=>{
+const allcomments=await Comment.find();
+const allcommentids=allcomments.map(comment=>comment._id);
+const allauthorid=allcomments.map(comment=>comment.author);
+const allpostid=allcomments.map(comment=>comment.post);
+const allcomment=allcomments.map(comment=>comment.comment);
+return res.status(201).json({allcomments:allcomments});
+}
+const allreply=async(req,res)=>{
+    const allreply=await Reply.find();
+    return res.status(201).json({allreply:allreply});
+}
+
+
+const deleteusercomment=async(req,res)=>{
+    const commentid=req.params.id;
+    console.log("user id is here ",commentid);
+    try {
+     const deletedUsercomment = await Comment.findByIdAndDelete(commentid);
+     if(deletedUsercomment){
+        return res.status(201).json({message:"Usercomment  deleted successfully"})
+        
+        
+     }
+     return res.status(404).json({ message: 'User comment not deleted successfully' });
+
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+const deleteuserreply=async(req,res)=>{
+    const replyid=req.params.id;
+    console.log("user id is here ",replyid);
+    try {
+     const deletedUserreply= await Reply.findByIdAndDelete(replyid);
+     if(deletedUserreply){
+        return res.status(201).json({message:"User reply deleted successfully"})
+        
+        
+     }
+     return res.status(404).json({ message: 'User reply not deleted successfully' });
+
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+export {adminlogin,allpost,Allregisteruserdetail,deleteuserdetail,deleteuserpost,allcomment,allreply,deleteusercomment, deleteuserreply}
