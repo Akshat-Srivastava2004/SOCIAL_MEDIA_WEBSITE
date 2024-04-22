@@ -16,6 +16,9 @@ import { allcomment } from "../controller/admin.controller.js";
 import { allreply } from "../controller/admin.controller.js";
 import { deleteusercomment } from "../controller/admin.controller.js";
 import { deleteuserreply } from "../controller/admin.controller.js";
+import { loginuserdetail } from "../controller/follow.controller.js";
+import { followfunction } from "../controller/follow.controller.js";
+import { followerdetails } from "../controller/follow.controller.js";
 const router=Router()
 
 router.route("/register").post(
@@ -57,6 +60,10 @@ router.route("/allcommentforadmin").get(allcomment)
 router.route("/allreplyforadmin").get(allreply)
 router.route("/deleteusercomment/:id").delete(deleteusercomment)
 router.route("/deleteuserreply/:id").delete(deleteuserreply)
+router.route("/loginuserdetail").get(loginuserdetail)
+router.route("/follow/:followerId/:followingId").post(followfunction)
+router.route("/followerdetail").get(followerdetails)
+
 export default router
 
 

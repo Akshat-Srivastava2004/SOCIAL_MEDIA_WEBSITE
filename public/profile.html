@@ -89,6 +89,32 @@
     #comment #reply {
       margin-left: 20px;
     }
+    #follow-button {
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+    
+    #follow-button:hover {
+      background-color: #45a049; /* Darker green */
+    }
+    
+    #following {
+      background-color: #f44336; /* Red */
+    }
+    
+    #following:hover {
+      background-color: #d32f2f; /* Darker red */
+    }
   </style>
 </head>
 <body>
@@ -97,11 +123,12 @@
       <div class="profile-photo">
         <img src="" alt="Profile Photo" id="profilephoto" style="width: 90px; height:80px;">
       </div>
+      <button id="follow-button" onclick="followup">Follow</button>
       <div class="profile-info">
         <div id="authorname">
           <h5 id="name"></h5>
         </div>
-        <!-- Add more profile information here -->
+       
       </div>
     </div>
     <div class="profile-posts">
@@ -110,7 +137,7 @@
         <h5 id="caption" ></h5>
         <h6 id="created"></h6>
         <h6 id="updated"></h6>
-        
+
         <!-- Comment Section -->
         <div id="comment-section">
           <!-- Sample Comment -->
@@ -128,8 +155,12 @@
     </div>
   </div>
   <script>
-    
+    document.addEventListener("DOMContentLoaded", function () {
+      loginuserdetail();
+  });
 
+  
+    
 
 
     const reply=document.getElementById("reply")
@@ -241,9 +272,9 @@ function getcookie04(cookiereply){
 }
 
 
-const userreply=getcookie04('allreplyies');
+ const userreply=getcookie04('allreplyies');
 console.log("All the reply of that post is ",userreply[0])
-reply.innerText=userreply[0].Message+ "-by " +userreply[0].Authorid;
+reply.innerText=userreply[0].Message+ "-by " +userreply[0].Authorid; 
 
 const usercomment=getcookie03('allcomment');
 console.log("---the comments of that post is ",usercomment[0]);
@@ -269,5 +300,56 @@ name.textContent="username:" + userDetails01[0].username;
 
 authorname.appendChild(name);
 
+async function loginuserdetail() {
+  try {
+    const response = await fetch("https://social-media-website-gw12.onrender.com/loginuserdetail");
+    if (!response.ok) {
+      throw new Error("Error fetching data");
+    }
+    const data = await response.json();
+    const loginuser = data.loginuser;
+    const loginusername = loginuser.username;
+    console.log("------the login detail is ", loginusername);
+    console.log("-----the login detail is ", loginuser);
+
+    const button = document.getElementById("follow-button");
+    button.addEventListener('click', function() {
+      button.id = userDetails01[0].username ; // Corrected the variable name here
+      console.log("the button id is ", button.id);
+      followup(button.id, loginusername); // Corrected the variable name here
+    });
+
+  } catch (error) {
+    console.error("Error:", error.message);
+  }
+}
+
+
+
+     async function followup(followerId, followingId)
+     {
+       try {
+         console.log("the follower id is ",followerId)
+         console.log("the following id is ",followingId)
+         const response = await fetch(`https://social-media-website-gw12.onrender.com/${followerId}/${followingId}`, {
+           method: 'POST',
+           headers: {
+             "Content-Type": "application/json",
+           }
+         });
+         
+         if (!response.ok) {
+           throw new Error('Failed to follow user');
+         }
+         
+         const data = await response.json();
+         console.log("---the response data is ", data);
+       } catch (error) {
+         console.error(error.message);
+       }
+     }
+     
+ 
+ 
   </script>
   

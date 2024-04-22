@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spark</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Include FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-i9FkrEytZD/1gdjFUF1fU0Uj4i8x0d8QosP8Fb1nXtqFGT2dEQ0PVyUYtQ+hUoB1akPBt5DyyF/Y0qUgkgELOw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* Reset default browser styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Global styles */
+body {
+  font-family: Arial, sans-serif;
+  background-image: linear-gradient(120deg, #FFADAD, #FFD6A5, #FDFFB6, #CAFFBF, #9BF6FF, #A0C4FF, #BDB2FF, #FFC6FF);
+ height: 100vh;
+  color: #333; /* Default text color */
+}
+
+header, footer {
+  background-color: #444;
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+}
+a:hover{
+    color: blueviolet;
+}
+
+ul {
+  list-style: none;
+}
+
+.logo a {
+  font-size: 1.5rem;
+}
+
+/* Header styles */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+}
+
+#search-bar input[type="text"] {
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+}
+
+nav ul {
+  display: flex;
+}
+
+nav ul li {
+  margin-right: 20px;
+}
+
+/* Main styles */
+main {
+  display: flex;
+  justify-content: center; /* Center content */
+  padding: 20px;
+}
+
+#story-section, .post-feed {
+  flex: 0 1 40%;
+  margin-bottom: 20px;
+}
+
+#story-section img, .post-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Post styles */
+#post {
+  background-color: #fff; /* White background for posts */
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+#post-content {
+  padding: 15px;
+
+}
+
+#post-content p {
+  margin-top: 10px;
+}
+
+#actions a {
+  color: #333; /* Darker text color */
+  margin-right: 10px;
+}
+
+/* Chat styles */
+#chat-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #fff; /* White background for chat section */
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+#chat-item img {
+  border-radius: 50%;
+  margin-right: 10px;
+}
+#actions a:hover {
+  color: blueviolet; /* Change text color on hover */
+}
+
+/* Footer styles */
+footer {
+  margin-top: 20px;
+}
+
+  </style>
+</head>
+<body>
+  <header>
+    <div id="logo">
+      <a href="#">Spark</a>
+    </div>
+    <div id="search-bar">
+      <input type="text" placeholder="Search">
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Explore</a></li>
+        <li><a href="#"><i id="fas fa-comment"></i></a></li> <!-- Chat icon -->
+        <li><a href="#">Profile</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="story-section">
+      <h2>Stories</h2> 
+      <div id="stories-container">
+        <img src="profile1.jpg" alt="Story 1">
+        <img src="profile2.jpg" alt="Story 2">
+        <img src="profile3.jpg" alt="Story 3">
+      </div>
+    </section>
+
+    <section id="post-feed">
+      <h2>Feed</h2>                                                                                
+      <article id="post">                                                                                                                                                                   
+        <header>
+          <div id="profile-picture">
+           
+          </div>
+          <div id="user-info">
+            
+            <span>1 hour ago</span>
+          </div>
+        </header>
+        <div id="post-content">
+          
+        </div>
+        <footer>
+          <div id="actions">
+            <a href="#" ><i id="fas fa-heart"></i> Like</a>
+            <button id="commentBtn">
+              <i class="fas fa-comment"></i> Comment
+          </button>
+            <a href="#"><i id="fas fa-share"></i> Share</a>
+          </div>
+        </footer>
+      </article>
+    </section>
+  </main>
+
+
+
+
+<script>
+
+document.addEventListener('DOMContentLoaded', async function() {
+  await loadProfilePage();
+});
+
+const buttonelement=document.getElementById("commentBtn")
+const commentsection=document.getElementById("actions")
+buttonelement.addEventListener("click",function(){
+ const textarea=document.createElement("textarea")
+ textarea.id = "commentText";
+  textarea.placeholder = "Write your comment here";
+commentsection.appendChild(textarea)
+})
+
+
+async function loadProfilePage() {
+  try {
+    const response = await fetch("https://social-media-website-gw12.onrender.com/followerdetail");
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const data = await response.json();
+    const allImages = data.allPostDetails;
+    const username=data.followerusername;
+    const  allpostcaption=data. allpostcaption;
+    console.log("------the all images are ", allImages);
+
+    const postDiv = document.getElementById("post-feed");
+    const pppp = document.getElementById("post-content");
+    const userdetail=document.getElementById("user-info");
+    const captiondetail=document.getElementById("post-content");
+
+
+    let count=0;
+
+
+
+
+    const authorName = username[count];
+    // const authorName = postIds[count].authorName;
+    const authorNameElement = document.createElement("div");
+    authorNameElement.textContent = `Uploaded by: ${authorName}`;
+    authorNameElement.classList.add("user-info");
+    console.log("-------nnnn", authorNameElement);
+
+
+
+            const captionname = allpostcaption[count];
+            console.log("----------capiton--------", captionname);
+            const captionelement = document.createElement("div");
+            captionelement.textContent = `Caption: ${captionname}`;
+            captionelement.classList.add("author-name");
+            console.log("-------nnnn", authorNameElement);
+
+
+
+    allImages.forEach(image => {
+      const postContainer = document.createElement("img");
+      postContainer.classList.add("post-content");
+      postContainer.src = image;
+      postContainer.alt = "image";
+      postContainer.width = "300"; 
+      postContainer.height = "300"; 
+      captiondetail.appendChild( captionelement);
+      userdetail.appendChild(authorNameElement);
+      pppp.appendChild(postContainer);
+      
+    });
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+</script>
+</body>
+</html>

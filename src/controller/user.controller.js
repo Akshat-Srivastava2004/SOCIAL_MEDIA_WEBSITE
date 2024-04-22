@@ -78,6 +78,7 @@ const generateAcessTokenAndRefereshTokens=async(userId)=>{
         console.log(user);
         const accessToken=user.generateAcessToken()
         const refreshToken=user.generateRefreshToken()
+        const token01=istokenisempty(accessToken,refreshToken);
         console.log("accessToken is :",accessToken)
         console.log("refreshToken is :",refreshToken
         )
