@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e2e3e4, #f6f8fa); /* Gradient background */
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* White container background with transparency */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #130606; /* White text */
+        }
+
+        .post {
+            background-color: #ecf0f1; /* Light grey post background */
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            position: relative;
+            perspective: 1000px;
+            transition: transform 0.5s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .post:hover {
+            transform: rotateY(-10deg);
+        }
+
+        .post-content img {
+            max-width: 100%;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .post-username {
+            font-weight: bold;
+            color: #333; /* Dark grey username */
+            margin-bottom: 5px;
+        }
+
+        .controls {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .delete-btn,
+        .block-btn {
+            background-color: #e74c3c; /* Red buttons */
+            color: #fff; /* White text */
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .delete-btn:hover,
+        .block-btn:hover {
+            background-color: #c0392b; /* Darker red on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <div id="postsContainer"></div>
+    </div>
+             
+    <script>
+        const container=document.getElementsByClassName('container')
+        const postsContainer=document.getElementById('postsContainer')
+        const authorcontainer=document.createElement("div")
+        const imagecontainer=document.createElement("div")
+        postsContainer.classList.add('post')
+        postsContainer.classList.add('post:hover')
+        postsContainer.classList.add('post-content')
+        imagecontainer.classList.add('post-content')
+        imagecontainer.innerHTML=`
+        <img src="" alt="Post Image">
+         `
+        postsContainer.appendChild(imagecontainer)
+        container.appendChild(postsContainer)
+
+    //NOW ALL FUNCTIONS ARE---
+     async function showallpost(){
+        try {
+            const response = await fetch(
+            "https://social-media-website-gw12.onrender.com/allpostadmin"
+          );
+          if (!response.ok) {
+            throw new Error("failed to fetch the image ");
+          }
+          const data=await response.json();
+        } catch (error) {
+            
+        }
+     }
+
+
+
+    </script>
+</body>
+</html>
