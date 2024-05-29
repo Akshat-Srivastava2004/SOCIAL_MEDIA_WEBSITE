@@ -23,6 +23,7 @@ import { followfunction } from "../controller/follow.controller.js";
 import { followerdetails } from "../controller/follow.controller.js";
 import { checklogout } from "../middlewares/authentication.middleware.js";
 import { userlogout } from "../controller/logout.controller.js";
+import { chatbot } from "../controller/chatbot.controller.js";
 const router=Router()
 
 router.route("/register").post(
@@ -68,6 +69,7 @@ router.route("/loginuserdetail").get(loginuserdetail)
 router.route("/follow/:followerId/:followingId").post(followfunction)
 router.route("/followerdetail").get(followerdetails)
 router.route("/logout").get(checklogout,userlogout)
+router.route("/chat").post(chatbot)
 export default router
 
 
