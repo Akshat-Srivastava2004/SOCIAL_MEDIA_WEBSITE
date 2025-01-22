@@ -37,7 +37,8 @@ app.use(cookieParser())
 
 // app.use("/api/v1/users", userRouter);
 app.use(cors({
-    origin: 'https://social-media-website-gw12.onrender.com'
+    origin: 'https://social-media-website-gw12.onrender.com',
+    credentials: true, // Allow credentials
   }), userRouter);
 
 export { app };
